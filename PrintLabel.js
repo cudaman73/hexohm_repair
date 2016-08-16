@@ -264,11 +264,8 @@
 		
         label = dymo.label.framework.openLabelXml(labelXml);
         // set label text
-        // label.setObjectText("Text", textTextArea.value);
-		//var n = receiveDate.format("d/m/yyyy hh:mm:ss");
 		label.setObjectText("custName", custName.value);
 		label.setObjectText("ticketNum", ticketNum.value);
-		//label.setObjectText("receiveDate", dateFormat(receiveDate, "m/d/yyyy hh:mm:ss"));
 		label.setObjectText("address1", address1.value);
 		label.setObjectText("address2", address2.value);
 		label.setObjectText("hexVersion", hexVersion.value);
@@ -276,10 +273,7 @@
 		label.setObjectText("hexColor", hexColor.value);
         // select printer to print on
         // for simplicity sake just use the first LabelWriter printer
-		//var printerName = "DYMO LabelWriter 400 (Copy 1)";
-		//label.print(printerName);
         var printers = dymo.label.framework.getPrinters();
-		console.log(printers);
         if (printers.length == 0)
             throw "No DYMO printers are installed. Install DYMO printers.";
         var printerName = "";
@@ -289,7 +283,6 @@
                 if (printer.printerType == "LabelWriterPrinter")
                 {
                 printerName = printer.name;
-				console.log(printerName);
                 break;
                 }
             }
@@ -297,8 +290,8 @@
             if (printerName == "")
                 throw "No LabelWriter printers found. Install LabelWriter printer";
             // finally print the label
-            label.print(printerName);
-			label.print(printerName);
+            //label.print(printerName);
+			//label.print(printerName);
             }
             catch(e)
             {
@@ -307,25 +300,16 @@
 		//date calculations for due_date
 		//@ this is a function to get the date and add 10 business days to date
 		function getRelativeDate() {
-  
-		//  get todays date
 			var date = new Date();
-
-		//  Set up a loop to add 1 for every date that is not a sunday or saturday to find 10 business days does not exclude holidays so needs to be carefull.  
 			var i = 0
-  
-			while (i < 10) 
+  			while (i < 10) 
 			{
 				date.setDate(date.getDate()+1)
 				if (date.getDay() > 0 && date.getDay() < 6) 
 				{
-				//console.log(date)
 				i++
 				} 
-			else 
-			{
-				//console.log(date)
-			}
+			else{}
 			};
 
 		//console.log(date);
@@ -337,17 +321,12 @@
 		//------------------------------------------------------------------
 		//Link to active hexohm spreadsheet
 		var google_url = "https://docs.google.com/a/cravingvapor.com/forms/d/e/1FAIpQLSeZKqOAet_J-ZoD2Bjn5xFiP9GRI9VJTqNl9P4hg_PRAZzYcg/formResponse";
-		//This one is the ajax test form
-		//var google_url = "https://docs.google.com/a/cravingvapor.com/forms/d/e/1FAIpQLSfZxuRj7L83pgKOL3n4icbEjan1XhCr0z0UDceL52cTaXMnQw/formResponse";
-		$.ajax({
+		/*$.ajax({
 			url: google_url,
-			//This is the entry for the live form
 			data: {"entry.1003910220":ticketNum.value},
-			//This is the entry for the ajax test form
-			//data: {"entry.1599668350":ticketNum.value},
 			type: 'POST',
 			dataType: 'xml'
-		});
+		});*/
 		
 		//------------------------------------------------------------------
 		//Update Freshdesk Ticket
@@ -355,9 +334,8 @@
 		var fresh_url = "https://cravingvapor.freshdesk.com/api/v2/tickets/"+ticketNum.value;
 		var due_by = getRelativeDate();
 		var API_KEY = "pZzTJpSnZNyEMnPYIbe";
-		//var payload = '{ "priority":2,"status":7,"source":2,"due_by":"'+due_by+'" }';
 		
-		$.ajax
+		/*$.ajax
 		({
 			url: fresh_url,
 			headers: {
@@ -379,9 +357,46 @@
 				console.log('ErrorText: ' + ErrorText + "\n");
 				console.log('thrownError: ' + thrownError +"\n");
 			}
-		});
+		});*/
+        
+        //adjust dates for mysql injection
+        receiveDate = receiveDate.getUTCFullYear() + '-' +
+                      ('00' + (receiveDate.getUTCMonth()+1)).slice(-2) + '-' +
+                      ('00' + receiveDate.getUTCDate()).slice(-2) + ' ' + 
+                      ('00' + receiveDate.getUTCHours()).slice(-2) + ':' + 
+                      ('00' + receiveDate.getUTCMinutes()).slice(-2) + ':' + 
+                      ('00' + receiveDate.getUTCSeconds()).slice(-2);
+        due_by = due_by.getUTCFullYear() + '-' +
+                 ('00' + (due_by.getUTCMonth()+1)).slice(-2) + '-' +
+                 ('00' + due_by.getUTCDate()).slice(-2) + ' ' + 
+                 ('00' + due_by.getUTCHours()).slice(-2) + ':' + 
+                 ('00' + due_by.getUTCMinutes()).slice(-2) + ':' + 
+                 ('00' + due_by.getUTCSeconds()).slice(-2);
+        
+        //send variables to php
+        $.ajax ({
+           url: 'ticketUpdate.php',
+           type: 'POST',
+           data:{
+               custName: custName.value,
+               ticketNum: ticketNum.value,
+               address: address1.value + " " + address2.value,
+               hexVersion: hexVersion.value,
+               hexSerial: hexSerial.value,
+               hexColor: hexColor.value,
+               receiveDate: receiveDate,
+               dueDate: due_by
+           },
+           success: function(){alert('Sent to PHP!');},
+           error: function (xhRequest, ErrorText, thrownError){
+            alert("Failed to POST");
+			console.log('xhRequest: ' + xhRequest + "\n");
+			console.log('ErrorText: ' + ErrorText + "\n");
+			console.log('thrownError: ' + thrownError +"\n");
+           }
+        });
 		
-        }
+        };
     };
     // register onload event
     if (window.addEventListener)
