@@ -34,7 +34,7 @@ VALUES ('$ticketNum', '$custname', '$address', '$hexVersion', '$hexSerial', '$he
 
 if ($conn->query($query) === TRUE) {
     $last_id = $conn->insert_id;
-    echo "New record created successfully! Last inserted ID is: " .$last_id;
+    echo "New record created successfully! Last inserted ID is: " .$last_id ."\n";
     echo $query;
 } else {
     echo "Error: " .$query. "<br>" . $conn->error;
