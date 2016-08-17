@@ -16,7 +16,55 @@
 
 <body> <h1>Hexohm Receiving Form (Testing)</h1>
  
-    <div id="custNameDiv">
+ <style type="text/css">
+	form  { display: table;      }
+	p     { display: table-row;  }
+	label { display: table-cell; }
+	input { display: table-cell; }
+    select{ display: tabel-cell; }
+</style>
+ <div id="container">
+ <form id="hex_repair_form">
+    <p>
+        <label>Customer Name:</label>
+        <input type="text" id="custName" onchange="getValues()"><br>
+    </p>
+    <p>
+        <label>Ticket Number:</label>
+        <input type="text" id="ticketNum" onchange="getValues()"><br>
+    </p>
+    <p>
+        <label>Street Address:</label>
+    <input type="text" id="address1"onchange="getValues()"><br>
+    </p>
+    <p>
+    <label>City, St Zip:</label>
+    <input type="text" id="address2" onchange="getValues()"><br>
+    </p>
+    <p>
+        <label for="hexVersion">Hexohm Version:</label> 
+        <select id="hexVersion" form="hex_repair_form" onchange="getValues()">
+            <option value="v1">v1</option>
+            <option value="v2">v2</option>
+            <option value="v2.1">v2.1</option>
+            <option value="3.0">3.0</option>
+            <option value="HexNA">HexNA</option>
+        </select><br>
+    </p>
+    <p>
+        <label>Serial Number:</label>
+        <input type="text" id="hexSerial" onchange="getValues()"><br>
+    </p>
+    <p>
+    <label>Color:</label>
+    <input type="text" id="hexColor" onchange="getValues()"><br>
+    </p>
+    <input type="submit" id="printButton" onchange="getValues()">
+</form>
+</div>
+   
+<!--  Old form, testing new html form fields
+   <div id="custNameDiv">
 	<label for="custName">Customer Name:</label><br/>
 	<textarea name="custName" id="custName" rows='1' cols='40'></textarea>
     </div><br/>
@@ -37,21 +85,16 @@
 	<textarea name="hexVersion" id="hexVersion" rows='1' cols='40'></textarea>
     </div><br/>
     <div id="hexSerialDiv">
-	<label for="hexSerial">Hexohm Serial # (e.g. #1234):</label><br/>
+	<label for="hexSerial">Hexohm Serial Number (e.g. 1234):</label><br/>
 	<textarea name="hexSerial" id="hexSerial" rows='1' cols='40'></textarea>
     </div><br/>
     <div id="hexColorDiv">
 	<label for="hexColor">Hexohm Color:</label><br/>
 	<textarea name="hexColor" id="hexColor" rows='1' cols='40'></textarea>
     </div><br/>
-    <!--
-	<div id="receiveDateDiv">
-	<label for="receiveDate">Date Received:</label><br/>
-	<textarea name="receiveDate" id="receiveDate" rows='1' cols='40'></textarea>
-    </div><br/>
-	-->
     <div id="printDiv">
          <button id="printButton">Print</button>
-    </div> </body>
+    </div> -->
+</body>
  
 </html>

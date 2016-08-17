@@ -2,16 +2,21 @@
     // called when the document completly loaded
     function onload()
     {
-	var custName = document.getElementById('custName');
-	var ticketNum = document.getElementById('ticketNum');
-	var address1 = document.getElementById('address1');
-	var address2 = document.getElementById('address2');
-	var hexVersion = document.getElementById('hexVersion');
-	var hexSerial = document.getElementById('hexSerial');
-	var hexColor = document.getElementById('hexColor');
-	var receiveDate = new Date();
-    var printButton = document.getElementById('printButton');
-        // prints the label
+    //get values from form
+    function getValues(){
+	var custName = document.getElementById('custName').value;
+	var ticketNum = document.getElementById('ticketNum').value;
+	var address1 = document.getElementById('address1').value;
+	var address2 = document.getElementById('address2').value;
+	var hexVersion = document.getElementById('hexVersion').value;
+	var hexSerial = document.getElementById('hexSerial').value;
+	var hexColor = document.getElementById('hexColor').value
+    var printButton = document.getElementById('printButton').value;
+    };
+    
+    //set receive date
+    	var receiveDate = new Date();
+    // prints the label
     printButton.onclick = function()
         {
             try
