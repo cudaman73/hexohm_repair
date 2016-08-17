@@ -373,6 +373,9 @@
                  ('00' + due_by.getUTCMinutes()).slice(-2) + ':' + 
                  ('00' + due_by.getUTCSeconds()).slice(-2);
         
+        //adjust address to new string for mysql injection
+        var address = address1.value + ", " + address2.value;
+        
         //send variables to php
         $.ajax ({
            url: 'ticketUpdate.php',
@@ -380,7 +383,7 @@
            data:{
                custName: custName.value,
                ticketNum: ticketNum.value,
-               address: address1.value + " " + address2.value,
+               address: address,
                hexVersion: hexVersion.value,
                hexSerial: hexSerial.value,
                hexColor: hexColor.value,
