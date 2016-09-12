@@ -2,27 +2,33 @@
     // called when the document completly loaded
     function onload()
     {
-    //get values from form
-    function getValues(){
-	var custName = document.getElementById('custName').value;
-	var ticketNum = document.getElementById('ticketNum').value;
-	var address1 = document.getElementById('address1').value;
-	var address2 = document.getElementById('address2').value;
-	var hexVersion = document.getElementById('hexVersion').value;
-	var hexSerial = document.getElementById('hexSerial').value;
-	var hexColor = document.getElementById('hexColor').value
-    var printButton = document.getElementById('printButton').value;
-    };
-    
-    //set receive date
-    	var receiveDate = new Date();
     // prints the label
-    printButton.onclick = function()
+    function onFormSubmit()
         {
+			//get values from form
+			var custName2 = document.getElementById('custName');
+			var ticketNum2 = document.getElementById('ticketNum');
+			var address12 = document.getElementById('address1');
+			var address22 = document.getElementById('address2');
+			var hexVersion2 = document.getElementById('hexVersion');
+			var hexSerial2 = document.getElementById('hexSerial');
+			var hexColor2 = document.getElementById('hexColor');
+			
+			var custName = custName2.value;
+			var ticketNum = ticketNum2.value;
+			var address1 = address12.value;
+			var address2 = address22.value;
+			var hexVersion = hexVersion2.value;
+			var hexSerial = hexSerial2.value;
+			var hexColor = hexColor2.value;
+	
+			//set receive date
+			var receiveDate = new Date();
+			
             try
             {
                 // default open label
-		var labelXml = '<?xml version="1.0" encoding="utf-8"?>\
+				var labelXml = '<?xml version="1.0" encoding="utf-8"?>\
 <DieCutLabel Version="8.0" Units="twips">\
 	<PaperOrientation>Landscape</PaperOrientation>\
 	<Id>Address</Id>\
@@ -295,7 +301,7 @@
             if (printerName == "")
                 throw "No LabelWriter printers found. Install LabelWriter printer";
             // finally print the label
-            //label.print(printerName);
+            label.print(printerName);
 			//label.print(printerName);
             }
             catch(e)
@@ -382,7 +388,7 @@
         var address = address1.value + ", " + address2.value;
         
         //send variables to php
-        $.ajax ({
+       /* $.ajax ({
            url: 'ticketUpdate.php',
            type: 'POST',
            data:{
@@ -402,7 +408,7 @@
 			console.log('ErrorText: ' + ErrorText + "\n");
 			console.log('thrownError: ' + thrownError +"\n");
            }
-        });
+        });*/
 		
         };
     };
