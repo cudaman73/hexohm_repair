@@ -49,6 +49,6 @@ printf("%d Row inserted successfully!\n",$stmt->affected_rows);
 $stmt->close();
 
           
-//echo $ticketNum, $custName, $address, $hexVersion, $hexSerial, $hexColor, $receiveDate, $dueDate;
+echo $ticketNum, $custName, $address, $hexVersion, $hexSerial, $hexColor, $receiveDate, $dueDate;
 $conn->close();
 ?>
