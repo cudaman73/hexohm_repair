@@ -210,7 +210,23 @@
                                     console.log('ErrorText: ' + ErrorText + "\n");
                                     console.log('thrownError: ' + thrownError +"\n");
                                 }
-                            });
+                            })
+							/*.done(function(){
+								$.ajax({
+	                                url: update_url,
+									headers: {
+										'Content-Type': 'application/json; charset=utf-8',
+										'Authorization': 'Basic ' + btoa(API_KEY + ':X') 
+									},
+									type: 'POST',
+									data: JSON.stringify({ 
+										"priority": 2,
+										"status": 7,
+										"source": 2,
+										"due_by": due_by
+									})
+								});
+							})*/;
                         }
                         else {
                             alert ('Ticket' + ticketNum.value + 'is already marked as received!')
